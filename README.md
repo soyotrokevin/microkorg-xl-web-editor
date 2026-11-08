@@ -31,7 +31,7 @@ Web MIDI requires a secure browser context and permission to access MIDI devices
 
 Use Chrome, connect your synth, and grant MIDI/SysEx permission when clicking **Connect**. No installation or local server is needed for the hosted version. This remains a beta; the hardware and mapping limitations below still apply.
 
-The **Presets** tab has a shared-bank selector when banks are available. Choose a bank and click **Load bank**, then **Send** next to a program. Loading a bank only downloads its data; it does not send anything to your synth until you click **Send**. You can still load a local `.mkxl_all` file.
+The **Presets** tab has a shared-bank selector when banks are available. The MKXL bank loads automatically the first time you open **Presets**. An already loaded bank, including a local file, is preserved when returning to the tab. To load another shared bank or reload it, choose it and click **Load bank**, then **Send** next to a program. Loading a bank only downloads its data; it does not send anything to your synth until you click **Send**. You can still load a local `.mkxl_all` file.
 
 ## Quick start (local)
 

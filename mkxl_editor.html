@@ -282,7 +282,7 @@ const DATA = {"groups":["OSC 1","OSC 2","Mixer","Filter 1","Filter 2","Amp","LFO
 let midiOut=null, midiIn=null, sel=null, channel=0, bank=[], vals={};
 const $=id=>document.getElementById(id);
 let activeTab="synth", bankQuery="";
-let bankLoadVersion=0;
+let bankLoadVersion=0, sharedBankLoading=false;
 let logT=null;
 function log(m){ const e=$('log'); e.textContent=m; e.classList.add('show');
   clearTimeout(logT); logT=setTimeout(()=>e.classList.remove('show'),1700); }
@@ -552,6 +552,7 @@ async function loadBank(f){
   catch(e){if(version===bankLoadVersion)log(e.message);}
 }
 async function setupSharedBanks(host){
+  const initialVersion=bankLoadVersion;
   try{
     const response=await fetch('presets/banks.json');
     if(!response.ok)throw new Error('Shared banks unavailable');
@@ -561,6 +562,8 @@ async function setupSharedBanks(host){
     if(!entries.length){host.textContent='No shared banks published yet. You can load your own file below.';return;}
     const select=document.createElement('select');select.setAttribute('aria-label','Shared preset bank');
     entries.forEach((entry,i)=>{const option=document.createElement('option');option.value=i;option.textContent=entry.name;select.appendChild(option);});
+    const defaultIndex=entries.findIndex(entry=>entry.file.endsWith('/MKXL_FactoryPreset.mkxl_all'));
+    if(defaultIndex>=0)select.value=defaultIndex;
     const button=document.createElement('button');button.className='hbtn';button.textContent='Load bank';button.type='button';
     button.onclick=async()=>{
       const version=++bankLoadVersion;button.disabled=true;button.textContent='Loading…';
@@ -576,6 +579,10 @@ async function setupSharedBanks(host){
       finally{button.disabled=false;button.textContent='Load bank';}
     };
     host.append(select,button);
+    if(!bank.length&&!sharedBankLoading&&bankLoadVersion===initialVersion){
+      sharedBankLoading=true;
+      try{await button.onclick();}finally{sharedBankLoading=false;}
+    }
   }catch(e){if(host.isConnected)host.textContent='Shared banks unavailable. You can load a local file below.';}
 }
 function paintList(root){
