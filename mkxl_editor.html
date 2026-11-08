@@ -212,6 +212,8 @@
   .bank{grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:12px;align-items:start}
   .bank .panel{width:100%}
   #plist{max-height:calc(100dvh - 245px)}
+  .shared-bank{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:9px;font-size:11px}
+  .shared-bank select{flex:1;min-width:140px;padding:7px;background:var(--lcd-bg);color:var(--lcd);border:1px solid #000;border-radius:2px}
   .empty{padding:24px;color:var(--silk-dim);font-size:11px;text-align:center}
   #log{max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis;z-index:10}
   @media(min-width:1200px){.panels .panel[data-group="OSC 1"] .row,.panels .panel[data-group="OSC 2"] .row,.panels .panel[data-group="Voice"] .row{--cols:4!important}}
@@ -280,6 +282,7 @@ const DATA = {"groups":["OSC 1","OSC 2","Mixer","Filter 1","Filter 2","Amp","LFO
 let midiOut=null, midiIn=null, sel=null, channel=0, bank=[], vals={};
 const $=id=>document.getElementById(id);
 let activeTab="synth", bankQuery="";
+let bankLoadVersion=0;
 let logT=null;
 function log(m){ const e=$('log'); e.textContent=m; e.classList.add('show');
   clearTimeout(logT); logT=setTimeout(()=>e.classList.remove('show'),1700); }
@@ -517,6 +520,7 @@ function renderBank(box){
   root.innerHTML=`<div class="bank">
     <div class="panel">
       <div class="phead"><h2>Bank</h2><span>128 programs</span></div>
+      <div class="shared-bank" id="sharedBank" aria-live="polite">Loading shared banks…</div>
       <div class="drop" id="drop">Drop a .mkxl_all file or click to browse</div>
       <input type="search" id="q" placeholder="Search…">
       <ul id="plist"></ul>
@@ -530,6 +534,7 @@ function renderBank(box){
         <li>Save on the synth with <b>WRITE</b>.</li>
       </ol></div>
     </div></div>`;
+  setupSharedBanks(root.querySelector('#sharedBank'));
   const drop=root.querySelector('#drop');
   drop.onclick=()=>{const i=document.createElement('input');i.type='file';i.accept='.mkxl_all';
     i.onchange=()=>i.files[0]&&loadBank(i.files[0]);i.click();};
@@ -540,8 +545,38 @@ function renderBank(box){
   root.querySelector('#q').oninput=()=>{bankQuery=root.querySelector('#q').value;paintList(root);};paintList(root);
 }
 async function loadBank(f){
-  try{bank=parseBank(new Uint8Array(await f.arrayBuffer()));log(bank.length+' presets');paintList(document);}
-  catch(e){log(e.message);}
+  const version=++bankLoadVersion;
+  try{const next=parseBank(new Uint8Array(await f.arrayBuffer()));
+    if(!next.length)throw new Error('This bank contains no programs');
+    if(version!==bankLoadVersion)return;bank=next;log(bank.length+' presets');paintList(document);}
+  catch(e){if(version===bankLoadVersion)log(e.message);}
+}
+async function setupSharedBanks(host){
+  try{
+    const response=await fetch('presets/banks.json');
+    if(!response.ok)throw new Error('Shared banks unavailable');
+    const entries=await response.json();
+    if(!Array.isArray(entries))throw new Error('Invalid shared bank catalog');
+    if(!host.isConnected)return;host.replaceChildren();
+    if(!entries.length){host.textContent='No shared banks published yet. You can load your own file below.';return;}
+    const select=document.createElement('select');select.setAttribute('aria-label','Shared preset bank');
+    entries.forEach((entry,i)=>{const option=document.createElement('option');option.value=i;option.textContent=entry.name;select.appendChild(option);});
+    const button=document.createElement('button');button.className='hbtn';button.textContent='Load bank';button.type='button';
+    button.onclick=async()=>{
+      const version=++bankLoadVersion;button.disabled=true;button.textContent='Loading…';
+      try{
+        const url=new URL(entries[+select.value].file,document.baseURI);
+        if(url.origin!==location.origin||!url.pathname.startsWith(new URL('presets/',document.baseURI).pathname))throw new Error('Invalid bank URL');
+        const response=await fetch(url);if(!response.ok)throw new Error('Could not load shared bank');
+        const next=parseBank(new Uint8Array(await response.arrayBuffer()));
+        if(!next.length)throw new Error('This bank contains no programs');
+        if(version!==bankLoadVersion)return;bank=next;bankQuery='';
+        const query=$('q');if(query)query.value='';paintList(document);log(bank.length+' shared presets loaded');
+      }catch(e){if(version===bankLoadVersion)log(e.message);}
+      finally{button.disabled=false;button.textContent='Load bank';}
+    };
+    host.append(select,button);
+  }catch(e){if(host.isConnected)host.textContent='Shared banks unavailable. You can load a local file below.';}
 }
 function paintList(root){
   const r=root||document; const ul=r.querySelector('#plist'); if(!ul)return;

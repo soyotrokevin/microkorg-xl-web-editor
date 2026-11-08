@@ -25,7 +25,15 @@ A compact, browser-based sound editor for the **Korg microKORG XL**, built with 
 
 Web MIDI requires a secure browser context and permission to access MIDI devices. Use localhost for local development, or HTTPS if hosting elsewhere. See [MDN's Web MIDI access documentation](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/requestMIDIAccess).
 
-## Quick start
+## Use online
+
+[**Open the editor in your browser**](https://soyotrokevin.github.io/microkorg-xl-web-editor/)
+
+Use Chrome, connect your synth, and grant MIDI/SysEx permission when clicking **Connect**. No installation or local server is needed for the hosted version. This remains a beta; the hardware and mapping limitations below still apply.
+
+The **Presets** tab has a shared-bank selector when banks are available. Choose a bank and click **Load bank**, then **Send** next to a program. Loading a bank only downloads its data; it does not send anything to your synth until you click **Send**. You can still load a local `.mkxl_all` file.
+
+## Quick start (local)
 
 1. Download this repository with **Code → Download ZIP** and extract it, or clone it:
 
@@ -67,7 +75,7 @@ Stop the local server with **Ctrl+C** when finished.
 5. Click **Send** next to a preset to send its program data to the synth's edit buffer.
 6. Audition the result and use **WRITE** on the synth if you want to keep it.
 
-Preset files are read locally in your browser. No banks or factory sound libraries are included.
+Preset files are read locally in your browser. The shared catalog is currently empty; no factory sound libraries are bundled.
 
 ## Beta limitations
 
@@ -96,3 +104,17 @@ docs/images/editor-beta.png   Screenshot of the English beta UI
 ```
 
 To report a bug, open an issue with your OS, browser version, synth model, connection type, parameter and steps to reproduce. Do not include private preset banks unless you intend to share them publicly.
+
+## Publishing shared banks
+
+Add banks you are allowed to redistribute to `presets/`, then list them in `presets/banks.json`:
+
+```json
+[
+  { "name": "My sound bank", "file": "presets/my-sound-bank.mkxl_all" }
+]
+```
+
+Bank paths must point inside this site's `presets/` directory. Everything added to this public repository is publicly downloadable. Local files selected in the editor are never uploaded.
+
+GitHub Pages serves the root of the `main` branch. Updates pushed to `main` are published automatically.
