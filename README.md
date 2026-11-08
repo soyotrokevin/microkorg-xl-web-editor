@@ -75,7 +75,7 @@ Stop the local server with **Ctrl+C** when finished.
 5. Click **Send** next to a preset to send its program data to the synth's edit buffer.
 6. Audition the result and use **WRITE** on the synth if you want to keep it.
 
-Preset files are read locally in your browser. The shared catalog is currently empty; no factory sound libraries are bundled.
+Preset files are read locally in your browser. The shared catalog includes the microKORG XL Factory Presets bank (`MKXL_FactoryPreset.mkxl_all`). The other banks are not included.
 
 ## Beta limitations
 
