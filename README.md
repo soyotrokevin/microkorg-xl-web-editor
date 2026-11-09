@@ -2,17 +2,20 @@
 
 A compact, browser-based sound editor for the **Korg microKORG XL**, built with plain HTML, CSS and JavaScript. Connect your synth through Web MIDI to adjust parameters and browse local preset banks.
 
-**Status: beta.** MIDI mappings and program decoding are experimental and need further testing on hardware. Back up your sounds before experimenting. This is an independent project, unaffiliated with Korg.
+**Status: beta.** New SysEx parameter mappings and FX type selection have hardware verification notes in the project documentation; complete UI-to-hardware validation is still pending. Back up your sounds before experimenting. This is an independent project, unaffiliated with Korg.
 
 ![microKORG XL Web Editor beta — synthesizer view](docs/images/editor-beta.png)
 
 ## Features
 
 - Compact synthesizer dashboard designed to fit a 1280 × 720 viewport at 100% browser zoom.
-- Dedicated Synthesizer, Matrix, Vocoder and Presets tabs.
+- Dedicated Synthesizer, Voice, FX, Matrix, Vocoder and Presets tabs.
+- 130 catalog controls, including SysEx voice, envelope, wave shaping and FX parameters.
+- Independent FX1/FX2 type selectors with 18 algorithms each and masked type decoding from program dumps.
 - Knobs, expanded selectors and ON/OFF switches for the arpeggiator, latch and vocoder.
 - Six modulation patches and a 16-band vocoder level/pan view.
-- MIDI CC/NRPN parameter messages and a SysEx program-read request.
+- A reproducible generator: edit the template and JSON catalog, then rebuild the standalone HTML.
+- MIDI CC/NRPN and SysEx parameter-change messages, plus SysEx program reads.
 - Local `.mkxl_all` bank loading, preset search and SysEx sending.
 - In-memory control values and preset search retained when switching tabs.
 - No build step, runtime dependencies, account or remote backend.
@@ -63,8 +66,16 @@ Stop the local server with **Ctrl+C** when finished.
 - Double-click a knob to reset it to MIDI value 64. This is a midpoint reset, not the original patch value.
 - Focus a knob and use the arrow keys to change its value; **Shift** reduces the step. **Home** and **End** select MIDI values 0 and 127.
 - Click a selector to choose an option, or click an ON/OFF switch to toggle it.
-- Switch tabs for modulation routing, vocoder bands or preset banks. Use Left/Right arrows while a tab is focused to move between tabs.
+- Switch tabs for voice and wave shaping, effects, modulation routing, vocoder bands or preset banks. Use Left/Right arrows while a tab is focused to move between tabs.
 - Changes are sent immediately when MIDI is connected. Use the synth's **WRITE** operation to save a sound permanently.
+
+![FX type selection and SysEx controls](docs/images/fx-beta.png)
+
+## Voice and effects
+
+**Voice** contains the added detune, spread, voice assignment, analog tuning, transpose, vibrato intensity and bend-range controls, plus a separate wave shaping panel. The main Synthesizer tab includes the extra envelope controls.
+
+**FX** exposes FX1 and FX2 type selection (OFF plus 17 algorithms), the existing macro/dry controls and the newly mapped parameters. Changing an effect type resets its parameter values on the hardware. Click **Read program** afterward to refresh the interface. Extra FX parameter labels come from the research catalog and are algorithm-specific; this is not a complete dynamic parameter editor for every algorithm.
 
 ## Loading a preset bank
 
@@ -81,11 +92,13 @@ Preset files are read locally in your browser. The shared catalog includes the m
 
 - Not every parameter, CC/NRPN mapping or packed SysEx field has been verified on hardware. Reading a program may not reproduce every setting accurately.
 - Some discrete parameters, including modulation destinations, currently appear as numeric knobs rather than named choices.
+- The inherited FC Mod Source NRPN entry has an out-of-range address and is blocked from sending until its mapping is corrected.
+- The two distinct Key Sync parameters have separate identifiers; their original addresses and offsets are retained.
 - MIDI ports are selected automatically: an output containing `sound` and an input containing `kbd` or `knob` are preferred; otherwise the first available ports are used. There is no manual port selector yet. Disconnect unrelated MIDI devices if the wrong ports are selected.
 - Changing controls without a MIDI connection updates the local interface only. Those changes are not replayed automatically after connecting.
 - Control state is held in memory and is lost on reload. There is no edited-bank export, local persistence or undo history.
 - Smaller windows use scrolling. Compatibility with microKORG XL+, the original microKORG and other models is not established.
-- The interface and simulated MIDI messages have been checked in desktop Chrome; complete hardware validation remains pending.
+- The 130-control interface, SysEx framing (including addresses above 127), FX masks, local-bank preservation and automatic shared-bank loading have regression checks in desktop Chrome; complete hardware validation remains pending.
 
 ## Troubleshooting
 
@@ -98,12 +111,43 @@ Preset files are read locally in your browser. The shared catalog includes the m
 ## Project structure
 
 ```text
-mkxl_editor.html              Standalone application
-README.md                     Setup, usage and beta notes
-docs/images/editor-beta.png   Screenshot of the English beta UI
+build_editor.py               Rebuilds the standalone application
+src/editor.template.html      UI, styling and MIDI runtime source
+ctrlr/controls_final.json     Authoritative 130-control catalog
+mkxl_editor.html              Generated standalone application
+index.html / .nojekyll        GitHub Pages entry point
+presets/                     Public MKXL bank and shared-bank catalog
+docs/protocol-notes.md        Imported protocol and hardware research notes
+docs/images/                 Screenshots
+tests/editor.cjs              Browser and simulated MIDI regression checks
+abrir_editor.command         Portable macOS local launcher
 ```
 
+Do not edit `mkxl_editor.html` directly: the next build will replace it. Edit `src/editor.template.html` for UI/runtime changes and `ctrlr/controls_final.json` for control metadata, then run:
+
+```sh
+python3 build_editor.py
+```
+
+The web application still has no runtime dependencies. Browser tests use Playwright as a development dependency:
+
+```sh
+npm install
+npx playwright install chromium
+npm test
+```
+
+Set `CHROME_PATH` to an existing Chrome executable if you want to test with that installation instead of Playwright's browser. Tests simulate MIDI; they do not connect to or modify hardware.
+
+On macOS, `abrir_editor.command` starts the local server from its own folder and opens Chrome. You can also use the cross-platform local-server instructions above.
+
+Earlier HTML versions, CLI utilities, mapping sweeps, binaries, logs and research data from the local working folder are preserved under `archive/2026-11-09/` locally. That archive and the existing Python environment are excluded from Git and GitHub Pages. The old CLI tools retain their original directory layout inside the archive; hard-coded research paths may need adjustment before reuse.
+
 To report a bug, open an issue with your OS, browser version, synth model, connection type, parameter and steps to reproduce. Do not include private preset banks unless you intend to share them publicly.
+
+## Protocol notes
+
+See [protocol and hardware research notes](docs/protocol-notes.md) for parameter-change framing, bank packing, FX type encoding and known gaps. Hardware verification statements there refer to the supplied research session. This update tested the browser and simulated MIDI messages without sending anything to a connected synth.
 
 ## Publishing shared banks
 

@@ -1,0 +1,2381 @@
+{
+  "groups": [
+    "OSC 1",
+    "OSC 2",
+    "Mixer",
+    "Filter 1",
+    "Filter 2",
+    "Amp",
+    "LFO",
+    "Matrix",
+    "Arp",
+    "Vocoder",
+    "FX",
+    "Voice",
+    "Other"
+  ],
+  "controls": [
+    {
+      "name": "OSC_1 WAVE",
+      "label": "OSC 1 Wave",
+      "ui": "uiCombo",
+      "group": "OSC 1",
+      "values": [
+        {
+          "label": "SAW",
+          "value": 0
+        },
+        {
+          "label": "PULSE",
+          "value": 16
+        },
+        {
+          "label": "TRIANGLE",
+          "value": 32
+        },
+        {
+          "label": "SINE",
+          "value": 48
+        },
+        {
+          "label": "FORMAT",
+          "value": 64
+        },
+        {
+          "label": "NOISE",
+          "value": 80
+        },
+        {
+          "label": "PCM/DWGS",
+          "value": 96
+        },
+        {
+          "label": "AUDIO IN",
+          "value": 112
+        }
+      ],
+      "kind": "cc",
+      "cc": 8,
+      "off": 32,
+      "official": "OSC 1 Wave",
+      "min": 0,
+      "max": 7,
+      "key": "Osc1Wave"
+    },
+    {
+      "name": "OSC MOD1",
+      "label": "OSC 1 Mod",
+      "ui": "uiCombo",
+      "group": "OSC 1",
+      "values": [
+        {
+          "label": "WAVE",
+          "value": 0
+        },
+        {
+          "label": "CROSS",
+          "value": 32
+        },
+        {
+          "label": "UNISON",
+          "value": 64
+        },
+        {
+          "label": "VPM",
+          "value": 96
+        }
+      ],
+      "kind": "cc",
+      "cc": 9,
+      "off": 32,
+      "official": "OSC 1 Mod",
+      "min": 0,
+      "max": 3
+    },
+    {
+      "name": "OSC_2_WAVE",
+      "label": "OSC 2 Wave",
+      "ui": "uiCombo",
+      "group": "OSC 2",
+      "values": [
+        {
+          "label": "SAW",
+          "value": 0
+        },
+        {
+          "label": "PULSE",
+          "value": 32
+        },
+        {
+          "label": "TRIANGLE",
+          "value": 64
+        },
+        {
+          "label": "SINE",
+          "value": 96
+        }
+      ],
+      "kind": "cc",
+      "cc": 18,
+      "off": 37,
+      "official": "OSC 2 Wave",
+      "min": 0,
+      "max": 3,
+      "key": "Osc2Wave"
+    },
+    {
+      "name": "OSC_2 OSC_MOD",
+      "label": "OSC 2 OSC MOD",
+      "ui": "uiCombo",
+      "group": "OSC 2",
+      "values": [
+        {
+          "label": "OFF",
+          "value": 0
+        },
+        {
+          "label": "RING",
+          "value": 32
+        },
+        {
+          "label": "SYNC",
+          "value": 64
+        },
+        {
+          "label": "RING SYNC",
+          "value": 96
+        }
+      ],
+      "kind": "cc",
+      "cc": 19,
+      "off": 37
+    },
+    {
+      "name": "OSC_1 CTR",
+      "label": "OSC 1 Ctrl 1",
+      "ui": "uiImageSlider",
+      "group": "OSC 1",
+      "values": [],
+      "kind": "cc",
+      "cc": 15,
+      "off": 33,
+      "official": "OSC 1 Ctrl 1",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "OSC_2_TUNE",
+      "label": "OSC 2 Tune",
+      "ui": "uiImageSlider",
+      "group": "OSC 2",
+      "values": [],
+      "kind": "cc",
+      "cc": 21,
+      "off": 39,
+      "official": "OSC 2 Tune",
+      "min": -63,
+      "max": 63,
+      "key": "Value"
+    },
+    {
+      "name": "OSC_2_SEMITONE",
+      "label": "OSC 2 Semitone",
+      "ui": "uiImageSlider",
+      "group": "OSC 2",
+      "values": [],
+      "kind": "cc",
+      "cc": 20,
+      "off": 38,
+      "official": "OSC 2 Semitone",
+      "min": -24,
+      "max": 24,
+      "key": "Value"
+    },
+    {
+      "name": "OSC_1 CTR_2",
+      "label": "OSC 1 Ctrl 2",
+      "ui": "uiImageSlider",
+      "group": "OSC 1",
+      "values": [],
+      "kind": "cc",
+      "cc": 17,
+      "off": 34,
+      "official": "OSC 1 Ctrl 2",
+      "min": 0,
+      "max": 127
+    },
+    {
+      "name": "SOURSE MIX OSC_1",
+      "label": "SOURSE MIX OSC 1",
+      "ui": "uiImageSlider",
+      "group": "Mixer",
+      "values": [],
+      "kind": "cc",
+      "cc": 23,
+      "off": 40,
+      "key": "Value"
+    },
+    {
+      "name": "SOURSE MIX OSC_2",
+      "label": "SOURSE MIX OSC 2",
+      "ui": "uiImageSlider",
+      "group": "Mixer",
+      "values": [],
+      "kind": "cc",
+      "cc": 24,
+      "off": 41,
+      "key": "Value"
+    },
+    {
+      "name": "SOURSE MIX NOISE",
+      "label": "SOURSE MIX NOISE",
+      "ui": "uiImageSlider",
+      "group": "Mixer",
+      "values": [],
+      "kind": "cc",
+      "cc": 25,
+      "off": 42,
+      "key": "Value"
+    },
+    {
+      "name": "FILTER_1 CUTOFF",
+      "label": "Filter 1 Cutoff",
+      "ui": "uiImageSlider",
+      "group": "Filter 1",
+      "values": [],
+      "kind": "cc",
+      "cc": 74,
+      "off": 46,
+      "official": "Filter 1 Cutoff",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "FILTER1 ROUTING",
+      "label": "Filter Routing",
+      "ui": "uiCombo",
+      "group": "Filter 1",
+      "values": [
+        {
+          "label": "SINGLE",
+          "value": 0
+        },
+        {
+          "label": "SERIAL",
+          "value": 32
+        },
+        {
+          "label": "PARALLEL",
+          "value": 64
+        },
+        {
+          "label": "INDIV",
+          "value": 96
+        }
+      ],
+      "kind": "cc",
+      "cc": 26,
+      "off": 44,
+      "official": "Filter Routing",
+      "min": 0,
+      "max": 3
+    },
+    {
+      "name": "FILTER_1 RESO",
+      "label": "FILTER RESO",
+      "ui": "uiImageSlider",
+      "group": "Filter 1",
+      "values": [],
+      "kind": "cc",
+      "cc": 71,
+      "off": 47,
+      "key": "Value"
+    },
+    {
+      "name": "FILTER_1 EG_INT",
+      "label": "Filter 1 EG 1 Int",
+      "ui": "uiImageSlider",
+      "group": "Filter 1",
+      "values": [],
+      "kind": "cc",
+      "cc": 79,
+      "off": 48,
+      "official": "Filter 1 EG 1 Int",
+      "min": -63,
+      "max": 63
+    },
+    {
+      "name": "PITCH PORTA",
+      "label": "PITCH PORTA.",
+      "ui": "uiImageSlider",
+      "group": "Voice",
+      "values": [],
+      "kind": "cc",
+      "cc": 5,
+      "off": 30
+    },
+    {
+      "name": "Unison Mode",
+      "label": "Unison Mode",
+      "ui": "uiCombo",
+      "group": "Voice",
+      "values": [
+        {
+          "label": "OFF",
+          "value": 0
+        },
+        {
+          "label": "2VOICE",
+          "value": 32
+        },
+        {
+          "label": "3VOICE",
+          "value": 64
+        },
+        {
+          "label": "4VOICE",
+          "value": 96
+        }
+      ],
+      "kind": "cc",
+      "cc": 3,
+      "off": 20
+    },
+    {
+      "name": "FILTER1 TYP_BAL",
+      "label": "FILTER1 TYP BAL",
+      "ui": "uiImageSlider",
+      "group": "Filter 1",
+      "values": [],
+      "kind": "cc",
+      "cc": 27,
+      "off": 45
+    },
+    {
+      "name": "DRIVE WS",
+      "label": "Drive/WS SW",
+      "ui": "uiImageSlider",
+      "group": "Other",
+      "values": [],
+      "kind": "cc",
+      "cc": 83,
+      "off": 59,
+      "official": "Drive/WS SW",
+      "min": 0,
+      "max": 2,
+      "key": "WsSw"
+    },
+    {
+      "name": "AMP_EG1 ATTACK",
+      "label": "EG 1 Attack",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 85,
+      "off": 64,
+      "official": "EG 1 Attack",
+      "min": 0,
+      "max": 127
+    },
+    {
+      "name": "AMP_EG1 DECAY",
+      "label": "AMP EG1 DECAY",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 86,
+      "off": 65
+    },
+    {
+      "name": "AMP_EG1 SUSTAIN",
+      "label": "EG 1 Sustain",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 87,
+      "off": 66,
+      "official": "EG 1 Sustain",
+      "min": 0,
+      "max": 127
+    },
+    {
+      "name": "AMP_EG1 RELEASE",
+      "label": "EG 1 Release",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 88,
+      "off": 67,
+      "official": "EG 1 Release",
+      "min": 0,
+      "max": 127
+    },
+    {
+      "name": "PATCH1 SOURCE",
+      "label": "Patch 1 Source",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [
+        {
+          "label": "FILTER EG",
+          "value": 0
+        },
+        {
+          "label": "AMP EG",
+          "value": 18
+        },
+        {
+          "label": "LFO 1",
+          "value": 36
+        },
+        {
+          "label": "LFO 2",
+          "value": 54
+        },
+        {
+          "label": "VELOCITY",
+          "value": 72
+        },
+        {
+          "label": "KBD TRACK",
+          "value": 90
+        },
+        {
+          "label": "PITCH BEND",
+          "value": 108
+        },
+        {
+          "label": "MOD WHEEL",
+          "value": 126
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        0
+      ],
+      "off": 90,
+      "official": "Patch 1 Source",
+      "min": 0,
+      "max": 11,
+      "key": "PatchSource"
+    },
+    {
+      "name": "PATCH1_DESTINATION",
+      "label": "Patch 1 Destination",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        8
+      ],
+      "off": 91,
+      "official": "Patch 1 Destination",
+      "min": 0,
+      "max": 39,
+      "key": "PatchDest"
+    },
+    {
+      "name": "FILTER_1 KEY_TRACK",
+      "label": "Filter 1 Key Track",
+      "ui": "uiImageSlider",
+      "group": "Filter 1",
+      "values": [],
+      "kind": "cc",
+      "cc": 28,
+      "off": 49,
+      "official": "Filter 1 Key Track",
+      "min": -63,
+      "max": 63,
+      "key": "FltKeyTrack"
+    },
+    {
+      "name": "AMP LEVEL",
+      "label": "AMP LEVEL",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 7,
+      "off": 56
+    },
+    {
+      "name": "AMP PAN",
+      "label": "AMP PAN",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 10,
+      "off": 60
+    },
+    {
+      "name": "AMP_EG2 ATTACK",
+      "label": "EG 2 Attack",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 73,
+      "off": 70,
+      "official": "EG 2 Attack",
+      "min": 0,
+      "max": 127
+    },
+    {
+      "name": "AMP_EG2 DECAY",
+      "label": "AMP EG2 DECAY",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 75,
+      "off": 71
+    },
+    {
+      "name": "AMP_EG2 SUSTAIN",
+      "label": "EG 2 Sustain",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 70,
+      "off": 72,
+      "official": "EG 2 Sustain",
+      "min": 0,
+      "max": 127
+    },
+    {
+      "name": "AMP_EG2 RELEASE",
+      "label": "EG 2 Release",
+      "ui": "uiImageSlider",
+      "group": "Amp",
+      "values": [],
+      "kind": "cc",
+      "cc": 72,
+      "off": 73,
+      "official": "EG 2 Release",
+      "min": 0,
+      "max": 127
+    },
+    {
+      "name": "FILTER_2_TYPE",
+      "label": "Filter 2 Type",
+      "ui": "uiCombo",
+      "group": "Filter 2",
+      "values": [
+        {
+          "label": "LPF",
+          "value": 0
+        },
+        {
+          "label": "HPF",
+          "value": 43
+        },
+        {
+          "label": "BPF",
+          "value": 85
+        }
+      ],
+      "kind": "cc",
+      "cc": 29,
+      "off": 44,
+      "official": "Filter 2 Type",
+      "min": 0,
+      "max": 2,
+      "key": "Flt2Type"
+    },
+    {
+      "name": "FILTER2 CUTOFF",
+      "label": "Filter 2 Cutoff",
+      "ui": "uiImageSlider",
+      "group": "Filter 2",
+      "values": [],
+      "kind": "cc",
+      "cc": 30,
+      "off": 51,
+      "official": "Filter 2 Cutoff",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "PATCH2 SOURCE",
+      "label": "Patch 2 Source",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [
+        {
+          "label": "FILTER EG",
+          "value": 0
+        },
+        {
+          "label": "AMP EG",
+          "value": 18
+        },
+        {
+          "label": "LFO 1",
+          "value": 36
+        },
+        {
+          "label": "LFO 2",
+          "value": 54
+        },
+        {
+          "label": "VELOCITY",
+          "value": 72
+        },
+        {
+          "label": "KBD TRACK",
+          "value": 90
+        },
+        {
+          "label": "PITCH BEND",
+          "value": 108
+        },
+        {
+          "label": "MOD WHEEL",
+          "value": 126
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        1
+      ],
+      "off": 93,
+      "official": "Patch 2 Source",
+      "min": 0,
+      "max": 11,
+      "key": "PatchSource"
+    },
+    {
+      "name": "PATCH2 DESTINATION",
+      "label": "Patch 2 Destination",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        9
+      ],
+      "off": 94,
+      "official": "Patch 2 Destination",
+      "min": 0,
+      "max": 39,
+      "key": "PatchDest"
+    },
+    {
+      "name": "FILTER_2 RESO",
+      "label": "FILTER RESO",
+      "ui": "uiImageSlider",
+      "group": "Filter 2",
+      "values": [],
+      "kind": "cc",
+      "cc": 68,
+      "off": 52,
+      "key": "Value"
+    },
+    {
+      "name": "PATCH3 SOURCE",
+      "label": "Patch 3 Source",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [
+        {
+          "label": "FILTER EG",
+          "value": 0
+        },
+        {
+          "label": "AMP EG",
+          "value": 18
+        },
+        {
+          "label": "LFO 1",
+          "value": 36
+        },
+        {
+          "label": "LFO 2",
+          "value": 54
+        },
+        {
+          "label": "VELOCITY",
+          "value": 72
+        },
+        {
+          "label": "KBD TRACK",
+          "value": 90
+        },
+        {
+          "label": "PITCH BEND",
+          "value": 108
+        },
+        {
+          "label": "MOD WHEEL",
+          "value": 126
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        2
+      ],
+      "off": 96,
+      "official": "Patch 3 Source",
+      "min": 0,
+      "max": 11,
+      "key": "PatchSource"
+    },
+    {
+      "name": "PATCH3 DESTINATION",
+      "label": "Patch 3 Destination",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        10
+      ],
+      "off": 97,
+      "fix": true,
+      "official": "Patch 3 Destination",
+      "min": 0,
+      "max": 39,
+      "key": "PatchDest"
+    },
+    {
+      "name": "Modulation",
+      "label": "Modulation",
+      "ui": "uiImageSlider",
+      "group": "Voice",
+      "values": [],
+      "kind": "cc",
+      "cc": 1
+    },
+    {
+      "name": "FILTER_2 EG_INT",
+      "label": "Filter 2 EG 1 Int",
+      "ui": "uiImageSlider",
+      "group": "Filter 2",
+      "values": [],
+      "kind": "cc",
+      "cc": 69,
+      "off": 53,
+      "official": "Filter 2 EG 1 Int",
+      "min": -63,
+      "max": 63
+    },
+    {
+      "name": "FILTER_2 KEY_TRACK",
+      "label": "Filter 2 Key Track",
+      "ui": "uiImageSlider",
+      "group": "Filter 2",
+      "values": [],
+      "kind": "cc",
+      "cc": 82,
+      "off": 54,
+      "official": "Filter 2 Key Track",
+      "min": -63,
+      "max": 63,
+      "key": "FltKeyTrack"
+    },
+    {
+      "name": "PATCH4 SOURCE",
+      "label": "Patch 4 Source",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [
+        {
+          "label": "FILTER EG",
+          "value": 0
+        },
+        {
+          "label": "AMP EG",
+          "value": 18
+        },
+        {
+          "label": "LFO 1",
+          "value": 36
+        },
+        {
+          "label": "LFO 2",
+          "value": 54
+        },
+        {
+          "label": "VELOCITY",
+          "value": 72
+        },
+        {
+          "label": "KBD TRACK",
+          "value": 90
+        },
+        {
+          "label": "PITCH BEND",
+          "value": 108
+        },
+        {
+          "label": "MOD WHEEL",
+          "value": 126
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        3
+      ],
+      "off": 99,
+      "official": "Patch 4 Source",
+      "min": 0,
+      "max": 11,
+      "key": "PatchSource"
+    },
+    {
+      "name": "PATCH4 DESTINATION",
+      "label": "Patch 4 Destination",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        11
+      ],
+      "off": 100,
+      "fix": true,
+      "official": "Patch 4 Destination",
+      "min": 0,
+      "max": 39,
+      "key": "PatchDest"
+    },
+    {
+      "name": "VOCODER LEVEL1",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        64
+      ],
+      "off": 217,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL2",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        65
+      ],
+      "off": 219,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL3",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        66
+      ],
+      "off": 221,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL4",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        67
+      ],
+      "off": 223,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL5",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        68
+      ],
+      "off": 225,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL6",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        69
+      ],
+      "off": 227,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL7",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        70
+      ],
+      "off": 229,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL8",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        71
+      ],
+      "off": 231,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL14",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        77
+      ],
+      "off": 243,
+      "fix": true,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL13",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        76
+      ],
+      "off": 241,
+      "fix": true,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL12",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        75
+      ],
+      "off": 239,
+      "fix": true,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL11",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        74
+      ],
+      "off": 237,
+      "fix": true,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL10",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        73
+      ],
+      "off": 235,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL9",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        72
+      ],
+      "off": 233,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "VOCODER LEVEL15",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        78
+      ],
+      "off": 245,
+      "fix": true,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "LFO_1 WAVE",
+      "label": "LFO 1 Wave",
+      "ui": "uiCombo",
+      "group": "LFO",
+      "values": [
+        {
+          "label": "SAW",
+          "value": 0
+        },
+        {
+          "label": "SQUARE",
+          "value": 26
+        },
+        {
+          "label": "TRIANGLE",
+          "value": 51
+        },
+        {
+          "label": "S/H",
+          "value": 77
+        },
+        {
+          "label": "RAMDOM",
+          "value": 102
+        }
+      ],
+      "kind": "cc",
+      "cc": 89,
+      "off": 82,
+      "official": "LFO 1 Wave",
+      "min": 0,
+      "max": 4,
+      "key": "Lfo1Wave"
+    },
+    {
+      "name": "LFO_1 FREQ",
+      "label": "LFO-1 FREQUENCY",
+      "ui": "uiImageSlider",
+      "group": "LFO",
+      "values": [],
+      "kind": "cc",
+      "cc": 90,
+      "off": 83
+    },
+    {
+      "name": "PATCH5 SOURCE",
+      "label": "Patch 5 Source",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [
+        {
+          "label": "FILTER EG",
+          "value": 0
+        },
+        {
+          "label": "AMP EG",
+          "value": 18
+        },
+        {
+          "label": "LFO 1",
+          "value": 36
+        },
+        {
+          "label": "LFO 2",
+          "value": 54
+        },
+        {
+          "label": "VELOCITY",
+          "value": 72
+        },
+        {
+          "label": "KBD TRACK",
+          "value": 90
+        },
+        {
+          "label": "PITCH BEND",
+          "value": 108
+        },
+        {
+          "label": "MOD WHEEL",
+          "value": 126
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        4
+      ],
+      "off": 102,
+      "official": "Patch 5 Source",
+      "min": 0,
+      "max": 11,
+      "key": "PatchSource"
+    },
+    {
+      "name": "PATCH5 DESTINATION",
+      "label": "Patch 5 Destination",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        12
+      ],
+      "off": 103,
+      "fix": true,
+      "official": "Patch 5 Destination",
+      "min": 0,
+      "max": 39,
+      "key": "PatchDest"
+    },
+    {
+      "name": "VOCODER LEVEL16",
+      "label": "Vocoder Level",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        79
+      ],
+      "off": 247,
+      "fix": true,
+      "official": "Vocoder Level",
+      "min": 0,
+      "max": 127,
+      "key": "Value"
+    },
+    {
+      "name": "LFO_2 WAVE",
+      "label": "LFO 2 Wave",
+      "ui": "uiCombo",
+      "group": "LFO",
+      "values": [
+        {
+          "label": "SAW",
+          "value": 0
+        },
+        {
+          "label": "SQUARE",
+          "value": 26
+        },
+        {
+          "label": "SINE",
+          "value": 51
+        },
+        {
+          "label": "S/H",
+          "value": 77
+        },
+        {
+          "label": "RAMDOM",
+          "value": 102
+        }
+      ],
+      "kind": "cc",
+      "cc": 102,
+      "off": 86,
+      "official": "LFO 2 Wave",
+      "min": 0,
+      "max": 4,
+      "key": "Lfo2Wave"
+    },
+    {
+      "name": "PATCH6 SOURCE",
+      "label": "Patch 6 Source",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [
+        {
+          "label": "FILTER EG",
+          "value": 0
+        },
+        {
+          "label": "AMP EG",
+          "value": 18
+        },
+        {
+          "label": "LFO 1",
+          "value": 36
+        },
+        {
+          "label": "LFO 2",
+          "value": 54
+        },
+        {
+          "label": "VELOCITY",
+          "value": 72
+        },
+        {
+          "label": "KBD TRACK",
+          "value": 90
+        },
+        {
+          "label": "PITCH BEND",
+          "value": 108
+        },
+        {
+          "label": "MOD WHEEL",
+          "value": 126
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        5
+      ],
+      "off": 105,
+      "official": "Patch 6 Source",
+      "min": 0,
+      "max": 11,
+      "key": "PatchSource"
+    },
+    {
+      "name": "PATCH6 DESTINATION",
+      "label": "Patch 6 Destination",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        13
+      ],
+      "off": 106,
+      "fix": true,
+      "official": "Patch 6 Destination",
+      "min": 0,
+      "max": 39,
+      "key": "PatchDest"
+    },
+    {
+      "name": "LFO_2 FREQ",
+      "label": "LFO-2 FREQUENCY",
+      "ui": "uiImageSlider",
+      "group": "LFO",
+      "values": [],
+      "kind": "cc",
+      "cc": 76,
+      "off": 89
+    },
+    {
+      "name": "ARP ON/OFF",
+      "label": "ARP ON/OFF",
+      "ui": "uiImageButton",
+      "group": "Arp",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        0,
+        2
+      ],
+      "off": 336
+    },
+    {
+      "name": "FX1_TYPE",
+      "label": "FX1 TYPE",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        1
+      ],
+      "off": 286,
+      "mask": 127,
+      "values": [
+        {
+          "label": "OFF",
+          "value": 0
+        },
+        {
+          "label": "COMPRESSOR",
+          "value": 1
+        },
+        {
+          "label": "FILTER",
+          "value": 2
+        },
+        {
+          "label": "BAND EQ",
+          "value": 3
+        },
+        {
+          "label": "DISTORT",
+          "value": 4
+        },
+        {
+          "label": "DECIMATOR",
+          "value": 5
+        },
+        {
+          "label": "DELAY",
+          "value": 6
+        },
+        {
+          "label": "LCR DELAY",
+          "value": 7
+        },
+        {
+          "label": "PAN DELAY",
+          "value": 8
+        },
+        {
+          "label": "MOD DELAY",
+          "value": 9
+        },
+        {
+          "label": "TAPE ECHO",
+          "value": 10
+        },
+        {
+          "label": "CHORUS",
+          "value": 11
+        },
+        {
+          "label": "FLANGER",
+          "value": 12
+        },
+        {
+          "label": "VIBRATO",
+          "value": 13
+        },
+        {
+          "label": "PHASER",
+          "value": 14
+        },
+        {
+          "label": "TREMOLO",
+          "value": 15
+        },
+        {
+          "label": "RING MOD",
+          "value": 16
+        },
+        {
+          "label": "GRAIN SHIFT",
+          "value": 17
+        }
+      ]
+    },
+    {
+      "name": "FX2_TYPE",
+      "label": "FX2 TYPE",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        49
+      ],
+      "off": 310,
+      "mask": 127,
+      "values": [
+        {
+          "label": "OFF",
+          "value": 0
+        },
+        {
+          "label": "COMPRESSOR",
+          "value": 1
+        },
+        {
+          "label": "FILTER",
+          "value": 2
+        },
+        {
+          "label": "BAND EQ",
+          "value": 3
+        },
+        {
+          "label": "DISTORT",
+          "value": 4
+        },
+        {
+          "label": "DECIMATOR",
+          "value": 5
+        },
+        {
+          "label": "DELAY",
+          "value": 6
+        },
+        {
+          "label": "LCR DELAY",
+          "value": 7
+        },
+        {
+          "label": "PAN DELAY",
+          "value": 8
+        },
+        {
+          "label": "MOD DELAY",
+          "value": 9
+        },
+        {
+          "label": "TAPE ECHO",
+          "value": 10
+        },
+        {
+          "label": "CHORUS",
+          "value": 11
+        },
+        {
+          "label": "FLANGER",
+          "value": 12
+        },
+        {
+          "label": "VIBRATO",
+          "value": 13
+        },
+        {
+          "label": "PHASER",
+          "value": 14
+        },
+        {
+          "label": "TREMOLO",
+          "value": 15
+        },
+        {
+          "label": "RING MOD",
+          "value": 16
+        },
+        {
+          "label": "GRAIN SHIFT",
+          "value": 17
+        }
+      ]
+    },
+    {
+      "name": "MASTER FX1_CTR_2",
+      "label": "MASTER FX1 CTR 2",
+      "ui": "uiImageSlider",
+      "group": "FX",
+      "values": [],
+      "kind": "cc",
+      "cc": 112,
+      "off": 292
+    },
+    {
+      "name": "MASTER FX1_DRY",
+      "label": "MASTER FX1 Dry",
+      "ui": "uiImageSlider",
+      "group": "FX",
+      "values": [],
+      "kind": "cc",
+      "cc": 115,
+      "off": 290
+    },
+    {
+      "name": "ARP GATE",
+      "label": "ARP GATE",
+      "ui": "uiImageSlider",
+      "group": "Arp",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        0,
+        10
+      ],
+      "off": 340,
+      "fix": true
+    },
+    {
+      "name": "ARP LATCH",
+      "label": "ARP LATCH",
+      "ui": "uiImageButton",
+      "group": "Arp",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        0,
+        4
+      ],
+      "off": 339
+    },
+    {
+      "name": "VOCODER PAN1",
+      "label": "VOCODER PAN1",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        80
+      ],
+      "off": 216
+    },
+    {
+      "name": "VOCODER PAN2",
+      "label": "VOCODER PAN2",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        81
+      ],
+      "off": 218
+    },
+    {
+      "name": "VOCODER PAN3",
+      "label": "VOCODER PAN3",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        82
+      ],
+      "off": 220
+    },
+    {
+      "name": "VOCODER PAN4",
+      "label": "VOCODER PAN4",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        83
+      ],
+      "off": 222
+    },
+    {
+      "name": "VOCODER PAN5",
+      "label": "VOCODER PAN5",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        84
+      ],
+      "off": 224
+    },
+    {
+      "name": "VOCODER PAN6",
+      "label": "VOCODER PAN6",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        85
+      ],
+      "off": 226
+    },
+    {
+      "name": "VOCODER PAN7",
+      "label": "VOCODER PAN7",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        86
+      ],
+      "off": 228
+    },
+    {
+      "name": "VOCODER PAN8",
+      "label": "VOCODER PAN8",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        87
+      ],
+      "off": 230
+    },
+    {
+      "name": "MASTER FX1_CTR_1",
+      "label": "MASTER FX1 CTR 1",
+      "ui": "uiImageSlider",
+      "group": "FX",
+      "values": [],
+      "kind": "cc",
+      "cc": 12,
+      "off": 291
+    },
+    {
+      "name": "VOCODER PAN16",
+      "label": "VOCODER PAN8",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        95
+      ],
+      "off": 246,
+      "fix": true
+    },
+    {
+      "name": "VOCODER PAN15",
+      "label": "VOCODER PAN7",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        94
+      ],
+      "off": 244,
+      "fix": true
+    },
+    {
+      "name": "VOCODER PAN14",
+      "label": "VOCODER PAN6",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        93
+      ],
+      "off": 242,
+      "fix": true
+    },
+    {
+      "name": "VOCODER PAN13",
+      "label": "VOCODER PAN5",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        92
+      ],
+      "off": 240,
+      "fix": true
+    },
+    {
+      "name": "VOCODER PAN12",
+      "label": "VOCODER PAN4",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        91
+      ],
+      "off": 238,
+      "fix": true
+    },
+    {
+      "name": "VOCODER PAN11",
+      "label": "VOCODER PAN3",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        90
+      ],
+      "off": 236,
+      "fix": true
+    },
+    {
+      "name": "VOCODER PAN10",
+      "label": "VOCODER PAN2",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        89
+      ],
+      "off": 234
+    },
+    {
+      "name": "VOCODER PAN9",
+      "label": "VOCODER PAN1",
+      "ui": "uiImageSlider",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        88
+      ],
+      "off": 232
+    },
+    {
+      "name": "ARP TYPE",
+      "label": "ARP TYP",
+      "ui": "uiCombo",
+      "group": "Arp",
+      "values": [
+        {
+          "label": "UP",
+          "value": 0
+        },
+        {
+          "label": "DOWN",
+          "value": 21
+        },
+        {
+          "label": "ALT 1",
+          "value": 42
+        },
+        {
+          "label": "ALT 2",
+          "value": 63
+        },
+        {
+          "label": "Random",
+          "value": 84
+        },
+        {
+          "label": "TRIGGER",
+          "value": 105
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        0,
+        7
+      ],
+      "off": 338
+    },
+    {
+      "name": "MASTER FX2_DRY",
+      "label": "MASTER FX2 DRY",
+      "ui": "uiImageSlider",
+      "group": "FX",
+      "values": [],
+      "kind": "cc",
+      "cc": 116,
+      "off": 314
+    },
+    {
+      "name": "MASTER FX2_CTR_2",
+      "label": "MASTER FX2 CTR 2",
+      "ui": "uiImageSlider",
+      "group": "FX",
+      "values": [],
+      "kind": "cc",
+      "cc": 113,
+      "off": 323
+    },
+    {
+      "name": "VOCODER_SWITCH",
+      "label": "VOCODER ON/OFF",
+      "ui": "uiImageButton",
+      "group": "Vocoder",
+      "values": [],
+      "kind": "nrpn",
+      "nrpn": [
+        5,
+        4
+      ],
+      "off": 208
+    },
+    {
+      "name": "FC MOD SOURCE",
+      "label": "FC Mod Source",
+      "ui": "uiCombo",
+      "group": "Matrix",
+      "values": [
+        {
+          "label": "EG1",
+          "value": 0
+        },
+        {
+          "label": "EG2",
+          "value": 11
+        },
+        {
+          "label": "EG3",
+          "value": 21
+        },
+        {
+          "label": "LFO1",
+          "value": 32
+        },
+        {
+          "label": "LFO2",
+          "value": 43
+        },
+        {
+          "label": "VELOCITY",
+          "value": 53
+        },
+        {
+          "label": "PITCH BEND",
+          "value": 64
+        },
+        {
+          "label": "MOD WHEEL",
+          "value": 75
+        },
+        {
+          "label": "KEYB TRACK",
+          "value": 85
+        },
+        {
+          "label": "MIDI1",
+          "value": 96
+        },
+        {
+          "label": "MIDI2",
+          "value": 107
+        },
+        {
+          "label": "MIDI3",
+          "value": 117
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        4,
+        150
+      ],
+      "official": "FC Mod Source",
+      "min": 0,
+      "max": 11,
+      "key": "FcModSource"
+    },
+    {
+      "name": "ARP OCTAVES",
+      "label": "ARP OCTAVES",
+      "ui": "uiCombo",
+      "group": "Arp",
+      "values": [
+        {
+          "label": "1",
+          "value": 0
+        },
+        {
+          "label": "2",
+          "value": 1
+        },
+        {
+          "label": "3",
+          "value": 2
+        },
+        {
+          "label": "4",
+          "value": 3
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        0,
+        3
+      ],
+      "off": 339
+    },
+    {
+      "name": "VOICE_MODE",
+      "label": "Voice Mode",
+      "ui": "uiCombo",
+      "group": "Voice",
+      "values": [
+        {
+          "label": "SINGLE",
+          "value": 0
+        },
+        {
+          "label": "LAYER",
+          "value": 32
+        },
+        {
+          "label": "SPLIT",
+          "value": 64
+        },
+        {
+          "label": "MULTI",
+          "value": 96
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        5,
+        0
+      ],
+      "off": 8,
+      "official": "Voice Mode",
+      "min": 0,
+      "max": 3,
+      "key": "VoiceMode"
+    },
+    {
+      "name": "EQ_HI GAIN",
+      "label": "EQ HI GAIN",
+      "ui": "uiImageSlider",
+      "group": "FX",
+      "values": [],
+      "kind": "cc",
+      "cc": 109,
+      "off": 111
+    },
+    {
+      "name": "EQ_LO GAIN",
+      "label": "EQ LO GAIN",
+      "ui": "uiImageSlider",
+      "group": "FX",
+      "values": [],
+      "kind": "cc",
+      "cc": 110,
+      "off": 109
+    },
+    {
+      "name": "ARP_SELECT",
+      "label": "ARP TYP",
+      "ui": "uiCombo",
+      "group": "Arp",
+      "values": [
+        {
+          "label": "TIMB 1",
+          "value": 0
+        },
+        {
+          "label": "TIMB 2",
+          "value": 43
+        },
+        {
+          "label": "TIMB 1+2",
+          "value": 86
+        }
+      ],
+      "kind": "nrpn",
+      "nrpn": [
+        0,
+        11
+      ],
+      "off": 8,
+      "fix": true
+    },
+    {
+      "name": "MASTER FX2_CTR_1",
+      "label": "MASTER FX2 CTR 2",
+      "ui": "uiImageSlider",
+      "group": "FX",
+      "values": [],
+      "kind": "cc",
+      "cc": 13,
+      "off": 320
+    },
+    {
+      "name": "SYX_DETUNE",
+      "label": "DETUNE",
+      "group": "Voice",
+      "kind": "sysex",
+      "addr": [
+        17,
+        9
+      ],
+      "off": 21,
+      "min": -50,
+      "max": 50
+    },
+    {
+      "name": "SYX_SPREAD",
+      "label": "SPREAD",
+      "group": "Voice",
+      "kind": "sysex",
+      "addr": [
+        17,
+        10
+      ],
+      "off": 22
+    },
+    {
+      "name": "SYX_VOICE_ASIG",
+      "label": "VOICE ASIG",
+      "group": "Voice",
+      "kind": "sysex",
+      "addr": [
+        17,
+        11
+      ],
+      "off": 23
+    },
+    {
+      "name": "SYX_ANLG_TUN",
+      "label": "ANLG TUN",
+      "group": "Voice",
+      "kind": "sysex",
+      "addr": [
+        17,
+        19
+      ],
+      "off": 25
+    },
+    {
+      "name": "SYX_TRANSPOSE",
+      "label": "TRANSPOSE",
+      "group": "Voice",
+      "kind": "sysex",
+      "addr": [
+        17,
+        20
+      ],
+      "off": 26,
+      "min": -48,
+      "max": 48
+    },
+    {
+      "name": "SYX_VIBRATION_INTENSITY",
+      "label": "VIBRATION INTENSITY",
+      "group": "Voice",
+      "kind": "sysex",
+      "addr": [
+        17,
+        22
+      ],
+      "off": 28
+    },
+    {
+      "name": "SYX_BEND_RANGE",
+      "label": "BEND RANGE",
+      "group": "Voice",
+      "kind": "sysex",
+      "addr": [
+        17,
+        16
+      ],
+      "off": 29,
+      "min": -12,
+      "max": 12
+    },
+    {
+      "name": "SYX_WAVE_POS",
+      "label": "WAVE POS",
+      "group": "OSC 1",
+      "kind": "sysex",
+      "addr": [
+        17,
+        82
+      ],
+      "off": 57
+    },
+    {
+      "name": "SYX_WAVE_SHAPE_TYPE",
+      "label": "WAVE SHAPE TYPE",
+      "group": "OSC 1",
+      "kind": "sysex",
+      "addr": [
+        17,
+        81
+      ],
+      "off": 58
+    },
+    {
+      "name": "SYX_PUNSH_LVL",
+      "label": "PUNSH LVL",
+      "group": "OSC 1",
+      "kind": "sysex",
+      "addr": [
+        17,
+        87
+      ],
+      "off": 62
+    },
+    {
+      "name": "SYX_ATTACK_1",
+      "label": "ATTACK 1",
+      "group": "Amp",
+      "kind": "sysex",
+      "addr": [
+        17,
+        128
+      ],
+      "off": 76
+    },
+    {
+      "name": "SYX_DECAY_1",
+      "label": "DECAY 1",
+      "group": "Amp",
+      "kind": "sysex",
+      "addr": [
+        17,
+        129
+      ],
+      "off": 77
+    },
+    {
+      "name": "SYX_SUSTAIN_1",
+      "label": "SUSTAIN 1",
+      "group": "Amp",
+      "kind": "sysex",
+      "addr": [
+        17,
+        130
+      ],
+      "off": 78
+    },
+    {
+      "name": "SYX_RELEASE_1",
+      "label": "RELEASE 1",
+      "group": "Amp",
+      "kind": "sysex",
+      "addr": [
+        17,
+        131
+      ],
+      "off": 79
+    },
+    {
+      "name": "SYX_KEY_SYNC",
+      "label": "KEY SYNC",
+      "group": "Other",
+      "kind": "sysex",
+      "addr": [
+        17,
+        148
+      ],
+      "off": 84
+    },
+    {
+      "name": "SYX_SYNC_NOTE",
+      "label": "SYNC NOTE",
+      "group": "Other",
+      "kind": "sysex",
+      "addr": [
+        17,
+        150
+      ],
+      "off": 85
+    },
+    {
+      "name": "SYX_KEY_SYNC_164",
+      "label": "KEY SYNC",
+      "group": "Other",
+      "kind": "sysex",
+      "addr": [
+        17,
+        164
+      ],
+      "off": 88
+    },
+    {
+      "name": "SYX_FX1_ATTACK",
+      "label": "FX1 ATTACK",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        19
+      ],
+      "off": 293
+    },
+    {
+      "name": "SYX_FX1_B1Q",
+      "label": "FX1 B1Q",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        20
+      ],
+      "off": 294
+    },
+    {
+      "name": "SYX_FX1_B1_FREQ",
+      "label": "FX1 B1 FREQ",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        21
+      ],
+      "off": 295
+    },
+    {
+      "name": "SYX_FX1_B2_FREQ",
+      "label": "FX1 B2 FREQ",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        24
+      ],
+      "off": 298
+    },
+    {
+      "name": "SYX_FX1_B2_Q",
+      "label": "FX1 B2 Q",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        25
+      ],
+      "off": 299
+    },
+    {
+      "name": "SYX_FX2_B1_PEK_L",
+      "label": "FX2 B1-PEK/L",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        66
+      ],
+      "off": 316
+    },
+    {
+      "name": "SYX_FX2_ATTACK_MS",
+      "label": "FX2 ATTACK MS",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        67
+      ],
+      "off": 317
+    },
+    {
+      "name": "SYX_FX2_B1Q",
+      "label": "FX2 B1Q",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        68
+      ],
+      "off": 318
+    },
+    {
+      "name": "SYX_FX2_B1_FREQ",
+      "label": "FX2 B1 FREQ",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        69
+      ],
+      "off": 319
+    },
+    {
+      "name": "SYX_FX2_B2_FREQ",
+      "label": "FX2 B2 FREQ",
+      "group": "FX",
+      "kind": "sysex",
+      "addr": [
+        80,
+        72
+      ],
+      "off": 322
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "microkorg-xl-web-editor",
+  "private": true,
+  "scripts": {"build": "python3 build_editor.py", "test": "node tests/editor.cjs"},
+  "devDependencies": {"playwright": "1.62.1"}
+}

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>microKORG XL — Sound Editor (Beta)</title>
+<style>
+  :root{
+    --body-hi:#A6A9A4; --body:#93968F; --body-lo:#7E817B;
+    --panel-hi:#AFB2AC; --panel-lo:#9EA19B;
+    --well:#43463F; --well2:#33362F;
+    --ink:#1A1C19; --silk:#DFE1DA; --silk-dim:#9CA09A;
+    --lcd-bg:#0B1009; --lcd:#F0A63C; --lcd-dim:#7A5A28;
+    --line:#6C6F69; --line2:#565954; --led:#F0A63C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Arial Narrow","Helvetica Neue",Arial,sans-serif;color:var(--ink);
+    height:100vh;display:flex;flex-direction:column;overflow:hidden;
+    background:
+      repeating-linear-gradient(90deg,rgba(255,255,255,.030) 0 1px,rgba(0,0,0,.022) 1px 3px),
+      linear-gradient(180deg,var(--body-hi) 0%,var(--body) 46%,var(--body-lo) 100%);
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    display:flex;align-items:center;gap:14px;padding:10px 20px;flex:0 0 auto;
+    background:linear-gradient(180deg,#26292A,#141717 55%,#0B0D0D);
+    border-bottom:1px solid #000;box-shadow:0 2px 8px rgba(0,0,0,.45);
+  }
+  .brand{display:flex;align-items:baseline;gap:10px}
+  .brand h1{font-size:18px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#F2F3EE}
+  .brand h1 b{color:var(--led);font-weight:700}
+  .brand em{font-style:normal;font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:#767B78}
+  .grow{flex:1}
+  .lcd{
+    background:var(--lcd-bg);border:1px solid #000;border-radius:2px;
+    box-shadow:inset 0 1px 5px rgba(0,0,0,.95),0 1px 0 rgba(255,255,255,.16);
+    color:var(--lcd);font-family:ui-monospace,Menlo,monospace;font-size:11px;
+    letter-spacing:.16em;padding:5px 10px;display:flex;align-items:center;gap:6px;
+    text-shadow:0 0 7px rgba(240,166,60,.55);
+  }
+  .lcd input{width:24px;background:transparent;border:0;color:var(--lcd);font:inherit;text-align:center;outline:none}
+  .lcd.dim{color:#5E4A22;text-shadow:none}
+  .hbtn{
+    font:inherit;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    color:#E4E6E1;padding:7px 13px;border-radius:3px;border:1px solid #3C403E;
+    background:linear-gradient(180deg,#3E4341,#252928 55%,#171A19);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 1px 2px rgba(0,0,0,.55);
+  }
+  .hbtn:hover{background:linear-gradient(180deg,#4C514E,#2A2F2D 55%,#1B1F1E)}
+  .hbtn:active{background:#141716;box-shadow:inset 0 2px 5px rgba(0,0,0,.75)}
+  .hbtn.pri{color:#160F03;border-color:#8A5A18;
+    background:linear-gradient(180deg,#F7C176,#EFA13A 55%,#C8801F)}
+  .hbtn.pri:hover{filter:brightness(1.06)}
+  main{flex:1;display:flex;min-height:0}
+  nav{
+    width:168px;flex:0 0 auto;padding:10px 7px;overflow:auto;
+    background:linear-gradient(180deg,#8E918B,#7B7E78);
+    border-right:1px solid var(--line2);
+    box-shadow:inset -1px 0 0 rgba(255,255,255,.24), inset 1px 0 0 rgba(0,0,0,.18);
+  }
+  nav button{
+    display:flex;justify-content:space-between;align-items:center;width:100%;cursor:pointer;
+    font:inherit;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#282B27;
+    text-align:left;padding:7px 9px;margin-bottom:1px;border-radius:2px;
+    border:1px solid transparent;background:transparent;
+  }
+  nav button:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.3)}
+  nav button.on{
+    color:#0D0F0C;border-color:var(--line2);
+    background:linear-gradient(180deg,#71746E,#8C8F89);
+    box-shadow:inset 0 2px 4px rgba(0,0,0,.35),inset 0 -1px 0 rgba(255,255,255,.25);
+  }
+  nav .n{font-size:9px;color:#575B55;letter-spacing:.06em}
+  nav button.on .n{color:#E6E8E2}
+  nav .sep{height:1px;margin:9px 5px;background:var(--line2);box-shadow:0 1px 0 rgba(255,255,255,.28)}
+  section{flex:1;overflow:auto;padding:12px 16px 60px}
+  .panel{
+    border-radius:4px;padding:8px 9px 9px;
+    background:linear-gradient(180deg,var(--panel-hi),var(--panel-lo));
+    border:1px solid var(--line2);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.16),0 2px 4px rgba(0,0,0,.18);
+  }
+  .phead{display:flex;align-items:center;gap:8px;margin-bottom:7px;padding-bottom:4px;
+    border-bottom:1px solid rgba(0,0,0,.20);box-shadow:0 1px 0 rgba(255,255,255,.40)}
+  .phead h2{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#1E211D}
+  .phead span{margin-left:auto;font-size:9px;letter-spacing:.12em;color:#4F524C;text-transform:uppercase}
+  .row{display:grid;grid-template-columns:repeat(auto-fill,minmax(94px,1fr));gap:7px}
+  /* Recessed module */
+  .m{
+    display:flex;flex-direction:column;align-items:center;gap:7px;padding:10px 5px 8px;
+    border-radius:4px;cursor:ns-resize;user-select:none;position:relative;
+    background:linear-gradient(180deg,var(--well),var(--well2));
+    border:1px solid #2A2D27;
+    box-shadow:inset 0 2px 5px rgba(0,0,0,.55),inset 0 -1px 0 rgba(255,255,255,.06);
+    transition:box-shadow .12s,border-color .12s;
+  }
+  .m:hover{border-color:#3F423B;box-shadow:inset 0 2px 6px rgba(0,0,0,.6),inset 0 -1px 0 rgba(255,255,255,.10)}
+  .m.active{border-color:#8A5A18;
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.6),0 0 0 1px rgba(240,166,60,.55),0 0 10px rgba(240,166,60,.18)}
+  .m .lab{
+    font-size:8.8px;line-height:1.25;text-align:center;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--silk-dim);min-height:23px;display:flex;align-items:center;
+  }
+  .m .dial{width:54px;height:54px;display:block}
+  .m .tick{stroke:#9AA096;stroke-width:1;opacity:.8}
+  .m .cap{fill:url(#knobGrad);stroke:#6E716C;stroke-width:1}
+  .m .cap2{fill:url(#knobSheen);stroke:none}
+  .m .val{fill:none;stroke:var(--led);stroke-width:2.6;stroke-linecap:round}
+  .m .ptr{stroke:#16190F;stroke-width:2.4;stroke-linecap:round}
+  .m .rd{
+    font-family:ui-monospace,Menlo,monospace;font-size:9px;letter-spacing:.02em;
+    color:var(--lcd);background:var(--lcd-bg);border:1px solid #000;border-radius:2px;
+    padding:1px 5px;min-width:44px;text-align:center;
+    box-shadow:inset 0 1px 4px rgba(0,0,0,.9);
+    text-shadow:0 0 6px rgba(240,166,60,.45);
+  }
+  .m .rd i{font-style:normal;color:var(--lcd-dim);font-size:8.5px;margin-left:3px}
+  .m.enum{cursor:pointer}
+  .m.enum select{
+    width:100%;font:inherit;font-size:9.4px;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--lcd);background:var(--lcd-bg);border:1px solid #000;border-radius:2px;
+    padding:6px 3px;outline:none;cursor:pointer;appearance:none;text-align:center;
+    box-shadow:inset 0 1px 4px rgba(0,0,0,.9);text-shadow:0 0 6px rgba(240,166,60,.4);
+  }
+  .m.enum select option{background:#0B1009;color:#F0A63C}
+  .m.sw{cursor:pointer}
+  .m.sw .led{
+    width:44px;height:20px;border-radius:2px;position:relative;
+    background:linear-gradient(180deg,#1E211C,#12140F);
+    border:1px solid #0A0C08;box-shadow:inset 0 2px 4px rgba(0,0,0,.8);
+  }
+  .m.sw .led::after{
+    content:"";position:absolute;top:2px;left:2px;width:18px;height:14px;border-radius:2px;
+    background:linear-gradient(180deg,#5A5E56,#3A3E38);border:1px solid #20231E;
+    box-shadow:0 1px 2px rgba(0,0,0,.5);transition:left .12s,background .12s,box-shadow .12s;
+  }
+  .m.sw.on .led::after{left:22px;background:linear-gradient(180deg,#F7C176,#E09A2E);
+    border-color:#8A5A18;box-shadow:0 0 8px rgba(240,166,60,.75)}
+  .bank{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:start}
+  .drop{border:1px dashed #6C6F69;border-radius:3px;padding:18px;text-align:center;
+    font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#3F423C;cursor:pointer;
+    background:rgba(255,255,255,.14)}
+  .drop:hover,.drop.on{border-color:#8A5A18;color:#6E4512;background:rgba(240,166,60,.14)}
+  input[type=search]{
+    width:100%;margin-top:9px;font:inherit;font-size:11px;letter-spacing:.05em;color:var(--lcd);
+    background:var(--lcd-bg);border:1px solid #000;border-radius:2px;padding:7px 9px;outline:none;
+    box-shadow:inset 0 1px 4px rgba(0,0,0,.9);text-shadow:0 0 6px rgba(240,166,60,.35);
+  }
+  #plist{list-style:none;margin-top:8px;max-height:calc(100vh - 290px);overflow:auto;
+    border:1px solid #5E615B;border-radius:3px;background:rgba(52,55,48,.55)}
+  #plist li{display:flex;align-items:center;gap:9px;padding:5px 9px;font-size:11.5px;
+    border-bottom:1px solid rgba(0,0,0,.30);color:#E6E8E1}
+  #plist li:last-child{border-bottom:0}
+  #plist li:hover{background:rgba(255,255,255,.10)}
+  #plist b{font-size:9px;color:#8F938B;min-width:22px;letter-spacing:.06em}
+  #plist span{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.04em}
+  #plist .send{margin-left:auto;font:inherit;font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+    cursor:pointer;padding:3px 8px;border-radius:2px;color:#DDE0D9;border:1px solid #2E322C;
+    background:linear-gradient(180deg,#3E4341,#1B1F1D)}
+  #plist .send:hover{color:#F7C176;border-color:#8A5A18}
+  .note{font-size:11px;line-height:1.75;color:#242721}
+  .note b{font-weight:700}
+  .note ol{margin:7px 0 0 15px}
+  .note li{margin-bottom:3px}
+  #log{
+    position:fixed;left:50%;transform:translateX(-50%);bottom:13px;opacity:0;transition:opacity .2s;
+    pointer-events:none;white-space:nowrap;font-family:ui-monospace,Menlo,monospace;font-size:10px;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--lcd);background:var(--lcd-bg);
+    border:1px solid #000;border-radius:2px;padding:6px 13px;
+    box-shadow:inset 0 1px 4px rgba(0,0,0,.9),0 2px 6px rgba(0,0,0,.3);
+    text-shadow:0 0 7px rgba(240,166,60,.5);
+  }
+  #log.show{opacity:1}
+
+  /* Compact dashboard: fixed navigation, responsive control grids. */
+  header{padding:9px 16px;gap:10px;min-height:52px}
+  main{flex-direction:column}
+  nav{width:100%;display:flex;gap:4px;padding:6px 16px 0;overflow:visible;
+    border-right:0;border-bottom:1px solid var(--line2);box-shadow:none;flex-wrap:wrap}
+  nav button{width:auto;margin:0;padding:9px 18px;border-radius:4px 4px 0 0;font-size:10px}
+  nav button.on{background:var(--body-hi);border-bottom-color:var(--body-hi);box-shadow:inset 0 2px 0 var(--led)}
+  nav .hint{margin-left:auto;align-self:center;font-size:10px;color:#34382f;padding:0 0 6px}
+  section{padding:10px 14px 18px;scrollbar-gutter:stable}
+  .panels{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px;align-items:stretch}
+  .panel{min-width:0;width:auto;padding:7px;grid-column:span var(--span,3)}
+  .phead{margin-bottom:6px;padding-bottom:4px}
+  .phead h2{font-size:10px;letter-spacing:.15em}
+  .row{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:4px;align-items:stretch}
+  .m{padding:4px 2px;gap:2px;min-width:0;touch-action:none}
+  .m .dial{width:40px;height:40px}
+  .m .lab{font-size:9px;min-height:21px;letter-spacing:.03em;line-height:1.2;justify-content:center}
+  .m .rd{font-size:10px;padding:1px 3px;min-width:0;max-width:100%;white-space:nowrap}
+  .panels .panel{display:flex;flex-direction:column}
+  .panels .row{flex:1}
+  .m.enum select{flex:1;font-size:11px;min-height:27px;padding:4px 5px;text-overflow:ellipsis}
+  .m.enum .lab{flex:0 0 auto}
+  .panels .m:not(.enum){justify-content:space-between}
+  .m.sw{font:inherit;width:100%;color:inherit;min-height:62px}
+  .m.sw .rd{margin-top:3px}
+  .m:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--led);outline-offset:2px}
+  .m[role=slider]{outline-offset:-2px}
+  .m[role=slider]:focus-visible{outline:2px solid var(--led)}
+  .vocoder{display:grid;gap:10px}
+  .vocoder .panel{width:100%}
+  .vocoder .row{grid-template-columns:repeat(16,minmax(0,1fr))}
+  .vocoder .switchbar{display:flex;align-items:center;gap:12px;font-size:11px}
+  .vocoder .switchbar .m{width:115px}
+  .matrix .row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .matrix{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .matrix .panel{grid-column:auto}
+  .bank{grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:12px;align-items:start}
+  .bank .panel{width:100%}
+  #plist{max-height:calc(100dvh - 245px)}
+  .detail-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:1200px;margin:auto}
+  .detail-panels .panel{grid-column:auto}
+  .detail-note{grid-column:1/-1;font-size:11px;line-height:1.6;color:#30352b;padding:2px 0 5px}
+  @media(max-width:600px){.detail-panels{grid-template-columns:minmax(0,1fr)}}
+  .shared-bank{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:9px;font-size:11px}
+  .shared-bank select{flex:1;min-width:140px;padding:7px;background:var(--lcd-bg);color:var(--lcd);border:1px solid #000;border-radius:2px}
+  .empty{padding:24px;color:var(--silk-dim);font-size:11px;text-align:center}
+  #log{max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis;z-index:10}
+  @media(min-width:1200px){.panels .panel[data-group="OSC 1"] .row,.panels .panel[data-group="OSC 2"] .row,.panels .panel[data-group="Voice"] .row{--cols:4!important}}
+  @media(max-width:1000px){
+    .brand em{display:none}.panels{grid-template-columns:repeat(6,minmax(0,1fr))}
+    .panel{grid-column:span 3}.panel[data-group="Amp"]{grid-column:span 6}
+    .vocoder .row{grid-template-columns:repeat(8,minmax(0,1fr))}nav .hint{display:none}
+  }
+  @media(max-width:600px){
+    header{flex-wrap:wrap;padding:8px;gap:6px}.brand h1{font-size:15px}.hbtn{padding:7px 8px;font-size:9px}
+    header .grow{display:none}.lcd{padding:5px;font-size:9px}nav{padding-left:6px;padding-right:6px}
+    nav button{padding:9px 10px}section{padding:8px}.panels{grid-template-columns:minmax(0,1fr)}
+    .panel,.panel[data-group="Amp"]{grid-column:1}.matrix,.bank{grid-template-columns:minmax(0,1fr)}
+    .vocoder .row{grid-template-columns:repeat(4,minmax(0,1fr))}
+  }
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#8B8E88,#6F726C);border-radius:9px;
+    border:1px solid #5A5D57}
+  ::-webkit-scrollbar-track{background:rgba(0,0,0,.10)}
+</style>
+</head>
+<body>
+<!-- Knob gradients -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <radialGradient id="knobGrad" cx="38%" cy="30%" r="78%">
+      <stop offset="0%" stop-color="#FBFAF6"/>
+      <stop offset="38%" stop-color="#DFE1DB"/>
+      <stop offset="72%" stop-color="#BCC0B8"/>
+      <stop offset="100%" stop-color="#8E928A"/>
+    </radialGradient>
+    <linearGradient id="knobSheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,.22)"/>
+      <stop offset="55%" stop-color="rgba(255,255,255,.03)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+  <div class="brand">
+    <h1>microKORG <b>XL</b></h1>
+    <em>sound editor · beta</em>
+  </div>
+  <div class="grow"></div>
+  <div class="lcd dim" id="midiState">MIDI —</div>
+  <div class="lcd">CH <input type="number" id="ch" value="1" min="1" max="16"></div>
+  <button class="hbtn" id="connect">Connect</button>
+  <button class="hbtn pri" id="readBtn">Read program</button>
+</header>
+
+<main>
+  <nav id="nav" role="tablist" aria-label="Editor sections">
+    <button id="tab-synth" type="button" role="tab" data-tab="synth" aria-controls="view">Synthesizer</button>
+    <button id="tab-voice" type="button" role="tab" data-tab="voice" aria-controls="view">Voice</button>
+    <button id="tab-fx" type="button" role="tab" data-tab="fx" aria-controls="view">FX</button>
+    <button id="tab-matrix" type="button" role="tab" data-tab="matrix" aria-controls="view">Matrix</button>
+    <button id="tab-vocoder" type="button" role="tab" data-tab="vocoder" aria-controls="view">Vocoder</button>
+    <button id="tab-bank" type="button" role="tab" data-tab="bank" aria-controls="view">Presets</button>
+    <span class="hint">Drag to adjust · Shift: fine adjustment</span>
+  </nav>
+  <section id="view" role="tabpanel" aria-labelledby="tab-synth"></section>
+</main>
+<div id="log"></div>
+
+<script>
+const DATA = __DATA__;
+let midiOut=null, midiIn=null, sel=null, channel=0, bank=[], vals={};
+const $=id=>document.getElementById(id);
+let activeTab="synth", bankQuery="";
+let bankLoadVersion=0, sharedBankLoading=false;
+let logT=null;
+function log(m){ const e=$('log'); e.textContent=m; e.classList.add('show');
+  clearTimeout(logT); logT=setTimeout(()=>e.classList.remove('show'),1700); }
+
+/* ---------- MIDI ---------- */
+$('connect').onclick=async()=>{
+  if(!navigator.requestMIDIAccess){ log('Web MIDI unavailable — use Chrome'); return; }
+  try{
+    const acc=await navigator.requestMIDIAccess({sysex:true});
+    const outs=[...acc.outputs.values()];
+    midiOut=outs.find(p=>/sound/i.test(p.name))||outs[0]||null;
+    const ins=[...acc.inputs.values()];
+    midiIn=ins.find(p=>/kbd|knob/i.test(p.name))||ins[0]||null;
+    if(midiIn) midiIn.onmidimessage=e=>{ const d=e.data;
+      if(d.length>8 && d[0]===0xF0 && d[4]===0x40) applyDump(d); };
+    const st=$('midiState');
+    st.textContent = midiOut ? 'MIDI OK' : 'MIDI —';
+    st.className='lcd'+(midiOut?' on':' dim');
+    log(midiOut? 'MIDI ready' : 'no MIDI outputs found');
+  }catch(e){ log(e.message); }
+};
+$('ch').onchange=()=>channel=Math.max(0,Math.min(15,(parseInt($('ch').value)||1)-1));
+function send(b){ if(!midiOut){ log('connect MIDI first'); return false; }
+  midiOut.send(new Uint8Array([0xB0|channel,...b])); return true; }
+function sendCtl(c,v){
+  v=Math.max(0,Math.min(127,Math.round(v)));
+  vals[c.name]=v;
+  if(c.kind==='sysex'){
+    if(!midiOut){log('connect MIDI first');return;}
+    const [p1,p2]=c.addr;
+    midiOut.send(new Uint8Array([0xF0,0x42,0x30|channel,0x7E,0x41,
+      p1&0x7F,(p1>>7)&0x7F,p2&0x7F,(p2>>7)&0x7F,v&0x7F,(v>>7)&0x7F,0xF7]));
+    log(c.label+'  '+fmt(c,v));return;
+  }
+  if(c.kind==='nrpn'&&c.nrpn.some(n=>!Number.isInteger(n)||n<0||n>127)){
+    log('Unverified NRPN address: '+c.label);return;
+  }
+  if(c.kind==='cc'){ if(!send([c.cc,v]))return; }
+  else{ if(!send([99,c.nrpn[0]]))return;
+        midiOut.send(new Uint8Array([0xB0|channel,98,c.nrpn[1]]));
+        midiOut.send(new Uint8Array([0xB0|channel,6,v])); }
+  log(c.label+'  '+fmt(c,v));
+}
+/* ---------- values ---------- */
+function isSwitch(c){return c.ui==='uiImageButton'||(c.max===1&&c.min===0);}
+function fmt(c,v){
+  if(isSwitch(c))return v>63?'ON':'OFF';
+  if(c.values&&c.values.length){
+    let b=c.values[0];
+    for(const x of c.values) if(Math.abs(x.value-v)<Math.abs(b.value-v)) b=x;
+    return b.label;
+  }
+  if(c.max!==undefined&&c.min!==undefined){
+    if(c.max<=1) return v>63?'ON':'OFF';
+    const r=Math.round(c.min+(v/127)*(c.max-c.min));
+    return (c.min<0&&r>0?'+':'')+r;
+  }
+  return Math.round(v/127*100)+'%';
+}
+function subv(c,v){
+  if(c.values&&c.values.length) return '';
+  if(c.max!==undefined&&c.min!==undefined&&c.max>1) return Math.round(v/127*100)+'%';
+  return '';
+}
+/* ---------- knob ---------- */
+const CX=32,CY=32,R=24;
+function dialSvg(){
+  let ticks='';
+  for(let i=0;i<=10;i++){
+    const a=(-135+i*27)*Math.PI/180;
+    const r1=27.5,r2=i%5===0?30.5:29;
+    ticks+=`<line class="tick" x1="${CX+Math.sin(a)*r1}" y1="${CY-Math.cos(a)*r1}"
+             x2="${CX+Math.sin(a)*r2}" y2="${CY-Math.cos(a)*r2}"/>`;
+  }
+  return `<svg class="dial" viewBox="0 0 64 64">
+    ${ticks}
+    <circle class="cap" cx="${CX}" cy="${CY}" r="${R-4}"/>
+    <circle class="cap2" cx="${CX}" cy="${CY}" r="${R-4}"/>
+    <circle class="val" cx="${CX}" cy="${CY}" r="${R+1.5}" pathLength="100"
+        transform="rotate(135 ${CX} ${CY})" stroke-dasharray="0 100"/>
+    <g class="pg"><line class="ptr" x1="${CX}" y1="${CY-R+7}" x2="${CX}" y2="${CY-6}"/></g>
+  </svg>`;
+}
+function paint(el,c,v){
+  el.setAttribute('aria-valuenow',Math.round(v));
+  el.setAttribute('aria-valuetext',fmt(c,v));
+  const p=v/127;
+  el.querySelector('.val').setAttribute('stroke-dasharray',(p*75)+' 100');
+  el.querySelector('.pg').setAttribute('transform',`rotate(${-135+p*270} ${CX} ${CY})`);
+  const s=subv(c,v);
+  el.querySelector('.rd').textContent = fmt(c,v)+(s?`  ${s}`:'');
+}
+function bindKnob(el,c){
+  let v = vals[c.name]!==undefined ? Math.min(127,vals[c.name]) : 64;
+  el.tabIndex=0;el.setAttribute('role','slider');el.setAttribute('aria-label',c.label);
+  el.setAttribute('aria-valuemin','0');el.setAttribute('aria-valuemax','127');
+  paint(el,c,v);
+  el.addEventListener('keydown',e=>{
+    const step=e.shiftKey?1:4;
+    const next={ArrowUp:v+step,ArrowRight:v+step,ArrowDown:v-step,ArrowLeft:v-step,Home:0,End:127}[e.key];
+    if(next===undefined)return;e.preventDefault();v=Math.max(0,Math.min(127,next));paint(el,c,v);sendCtl(c,v);
+  });
+  let drag=false,lastY=0,lastS=0;
+  el.addEventListener('pointerdown',e=>{drag=true;lastY=e.clientY;
+    el.setPointerCapture(e.pointerId);el.classList.add('active');});
+  el.addEventListener('pointermove',e=>{
+    if(!drag)return;
+    const dy=lastY-e.clientY; lastY=e.clientY;
+    v=Math.max(0,Math.min(127,v+dy*(e.shiftKey?.25:1)*(127/170)));
+    paint(el,c,v);
+    const n=Date.now(); if(n-lastS>45){lastS=n;sendCtl(c,v);}
+  });
+  const end=()=>{ if(!drag)return; drag=false; el.classList.remove('active'); sendCtl(c,v); };
+  el.addEventListener('pointerup',end); el.addEventListener('pointercancel',end);
+  el.addEventListener('dblclick',()=>{v=64;paint(el,c,v);sendCtl(c,v);});
+}
+/* ---------- rendering ---------- */
+function makeModule(c){
+  const labels={'ARP_SELECT':'Timbre','ARP TYPE':'Type','ARP ON/OFF':'Arpeggiator','ARP LATCH':'Latch','MASTER FX2_CTR_1':'FX 2 Ctrl 1'};
+  if(labels[c.name])c={...c,label:labels[c.name]};
+  const d=document.createElement(isSwitch(c)?'button':'div');
+  d.dataset.control=c.name;
+  if(c.values&&c.values.length){
+    d.className='m enum';
+    d.innerHTML=`<div class="lab">${c.label}</div>`;
+    const s=document.createElement('select');
+    s.innerHTML=c.values.map(x=>`<option value="${x.value}">${x.label}</option>`).join('');
+    if(vals[c.name]!==undefined){
+      let b=c.values[0];
+      for(const x of c.values) if(Math.abs(x.value-vals[c.name])<Math.abs(b.value-vals[c.name])) b=x;
+      s.value=b.value;
+    }
+    s.setAttribute('aria-label',c.label);
+    s.onchange=()=>sendCtl(c,+s.value);
+    d.appendChild(s);
+  } else if(isSwitch(c)){
+    d.type='button';d.className='m sw'+(vals[c.name]>63?' on':'');
+    d.setAttribute('role','switch');d.setAttribute('aria-label',c.label);
+    d.setAttribute('aria-checked',String(vals[c.name]>63));
+    d.innerHTML=`<div class="lab">${c.label}</div><div class="led" aria-hidden="true"></div><div class="rd">${vals[c.name]>63?'ON':'OFF'}</div>`;
+    d.onclick=()=>{const on=d.classList.toggle('on');d.setAttribute('aria-checked',String(on));
+      d.querySelector('.rd').textContent=on?'ON':'OFF';sendCtl(c,on?127:0);};
+  } else {
+    d.className='m';
+    d.innerHTML=`<div class="lab">${c.label}</div>${dialSvg()}<div class="rd">—</div>`;
+    bindKnob(d,c);
+  }
+  return d;
+}
+function panelFor(g,items=DATA.controls.filter(c=>c.group===g),cols,span=3){
+  const p=document.createElement('div');p.className='panel';p.dataset.group=g;
+  p.style.setProperty('--span',span);
+  p.innerHTML=`<div class="phead"><h2>${g}</h2><span>${items.length}</span></div><div class="row" style="--cols:${cols||Math.min(3,items.length)}"></div>`;
+  items.forEach(c=>p.querySelector('.row').appendChild(makeModule(c)));return p;
+}
+function renderAll(){
+  const v=$('view');v.replaceChildren();v.setAttribute('aria-labelledby','tab-'+activeTab);
+  document.querySelectorAll('[data-tab]').forEach(b=>{
+    const on=b.dataset.tab===activeTab;b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;
+  });
+  if(activeTab==='bank'){renderBank(v);return;}
+  if(activeTab==='vocoder'){
+    const wrap=document.createElement('div');wrap.className='vocoder';
+    const bar=document.createElement('div');bar.className='switchbar';
+    bar.appendChild(makeModule(DATA.controls.find(c=>c.name==='VOCODER_SWITCH')));
+    const hint=document.createElement('span');hint.textContent='16 bands · level and pan';bar.appendChild(hint);wrap.appendChild(bar);
+    for(const [kind,title] of [['LEVEL','Levels'],['PAN','Pan']]){
+      const items=DATA.controls.filter(c=>c.name.startsWith('VOCODER '+kind)).sort((a,b)=>+a.name.match(/\d+$/)[0]-+b.name.match(/\d+$/)[0]);
+      wrap.appendChild(panelFor(title,items.map(c=>({...c,label:'Band '+c.name.match(/\d+$/)[0]})),16));
+    }
+    v.appendChild(wrap);return;
+  }
+  if(activeTab==='voice'||activeTab==='fx'){
+    const wrap=document.createElement('div');wrap.className='detail-panels';
+    if(activeTab==='voice'){
+      wrap.appendChild(panelFor('Voice',DATA.controls.filter(c=>c.group==='Voice'),4));
+      wrap.firstChild.style.gridColumn='1 / -1';
+      wrap.appendChild(panelFor('Wave shaping',DATA.controls.filter(c=>c.group==='OSC 1'&&c.kind==='sysex'),3));
+    }else{
+      const note=document.createElement('p');note.className='detail-note';
+      note.textContent="Changing FX type resets that effect's parameters on the synth. Read program afterward to refresh values. Extra FX controls are algorithm-specific and retain their catalog labels.";wrap.appendChild(note);
+      const fx=DATA.controls.filter(c=>c.group==='FX');
+      for(const n of [1,2])wrap.appendChild(panelFor('FX '+n,fx.filter(c=>c.name.includes('FX'+n)),4));
+      wrap.appendChild(panelFor('EQ',fx.filter(c=>c.name.startsWith('EQ_')),2));
+    }
+    v.appendChild(wrap);return;
+  }
+  if(activeTab==='matrix'){
+    const wrap=document.createElement('div');wrap.className='matrix';
+    for(let i=1;i<=6;i++)wrap.appendChild(panelFor('Patch '+i,DATA.controls.filter(c=>c.group==='Matrix'&&c.name.startsWith('PATCH'+i)),2));
+    wrap.appendChild(panelFor('Control',DATA.controls.filter(c=>c.name==='FC MOD SOURCE'),1));v.appendChild(wrap);return;
+  }
+  const wrap=document.createElement('div');wrap.className='panels';
+  const layout=[['OSC 1',4,4],['OSC 2',4,4],['Mixer',3,4],
+    ['Filter 1',3,3],['Filter 2',3,3],['Amp',7,6],['LFO',2,4],['Arp',3,4],['Other',2,4]];
+  layout.forEach(([g,cols,span])=>wrap.appendChild(panelFor(g,g==='OSC 1'?DATA.controls.filter(c=>c.group===g&&c.kind!=='sysex'):undefined,cols,span)));v.appendChild(wrap);
+}
+document.querySelectorAll('[data-tab]').forEach(b=>{
+  b.onclick=()=>{activeTab=b.dataset.tab;renderAll();};
+  b.onkeydown=e=>{
+    const tabs=[...document.querySelectorAll('[data-tab]')];let i=tabs.indexOf(b);
+    if(e.key==='ArrowRight')i=(i+1)%tabs.length;
+    else if(e.key==='ArrowLeft')i=(i+tabs.length-1)%tabs.length;
+    else if(e.key==='Home')i=0;else if(e.key==='End')i=tabs.length-1;else return;
+    e.preventDefault();tabs[i].click();tabs[i].focus();
+  };
+});
+/* ---------- dump ---------- */
+function unpack7(d,size){
+  const out=[];
+  for(let i=0;i+1<d.length;i+=8){
+    const m=d[i];
+    for(let k=1;k<=7&&i+k<d.length;k++){
+      out.push(d[i+k]|(((m>>(k-1))&1)?0x80:0));
+      if(out.length>=size)return out;
+    }
+  }
+  return out;
+}
+function applyDump(d){
+  const blk=unpack7(Array.from(d).slice(5,d.length-1),346);
+  let n=0;
+  if(blk.length!==346){log('Incomplete program dump');return;}
+  DATA.controls.forEach(c=>{if(c.off!==undefined){vals[c.name]=blk[c.off]&(c.mask!==undefined?c.mask:0xFF);n++;}});
+  log('program loaded · '+n+' values'); renderAll();
+}
+$('readBtn').onclick=()=>{
+  if(!midiOut){log('connect MIDI first');return;}
+  midiOut.send(new Uint8Array([0xF0,0x42,0x30|channel,0x7E,0x10,0xF7]));
+  log('requesting program…');
+};
+/* ---------- bank ---------- */
+const CHUNK=528,HEADER=32,BLOCK=0x15A;
+function parseBank(buf){
+  let s=-1;
+  for(let i=0;i+8<=buf.length;i++){
+    if(buf[i]===0x36&&buf[i+1]===0x31&&buf[i+2]===0x34&&buf[i+3]===0x30&&
+       buf[i+4]===0x50&&buf[i+5]===0x72&&buf[i+6]===0x67&&buf[i+7]===0x44){s=i;break;}
+  }
+  if(s<0)throw new Error('not a .mkxl_all bank');
+  const out=[];
+  for(let o=s;o+CHUNK<=buf.length;o+=CHUNK){
+    if(buf[o]!==0x36||buf[o+7]!==0x44)break;
+    out.push(buf.subarray(o,o+CHUNK));
+  }
+  return out;
+}
+const nameOf=r=>{let s='';for(let i=HEADER;i<HEADER+8;i++)s+=String.fromCharCode(r[i]);return s.replace(/\s+$/,'');};
+function pack7(a){
+  const o=[];
+  for(let i=0;i<a.length;i+=7){
+    const g=a.subarray(i,i+7);let m=0;
+    for(let k=0;k<g.length;k++)if(g[k]&0x80)m|=1<<k;
+    o.push(m);for(let k=0;k<g.length;k++)o.push(g[k]&0x7F);
+  }
+  return o;
+}
+const sysex=r=>[0xF0,0x42,0x30|channel,0x7E,0x40,...pack7(r.subarray(HEADER,HEADER+BLOCK)),0xF7];
+function renderBank(box){
+  const root=box||$('view');
+  root.innerHTML=`<div class="bank">
+    <div class="panel">
+      <div class="phead"><h2>Bank</h2><span>128 programs</span></div>
+      <div class="shared-bank" id="sharedBank" aria-live="polite">Loading shared banks…</div>
+      <div class="drop" id="drop">Drop a .mkxl_all file or click to browse</div>
+      <input type="search" id="q" placeholder="Search…">
+      <ul id="plist"></ul>
+    </div>
+    <div class="panel">
+      <div class="phead"><h2>Before sending</h2></div>
+      <div class="note"><ol>
+        <li>GLOBAL → PROTECT = <b>OFF</b></li>
+        <li>MIDI FLT → SYS EX = <b>ENABLE</b></li>
+        <li>Choose a preset and click Send.</li>
+        <li>Save on the synth with <b>WRITE</b>.</li>
+      </ol></div>
+    </div></div>`;
+  setupSharedBanks(root.querySelector('#sharedBank'));
+  const drop=root.querySelector('#drop');
+  drop.onclick=()=>{const i=document.createElement('input');i.type='file';i.accept='.mkxl_all';
+    i.onchange=()=>i.files[0]&&loadBank(i.files[0]);i.click();};
+  ['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('on');}));
+  ['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('on');}));
+  drop.addEventListener('drop',ev=>{const f=ev.dataTransfer.files[0];if(f)loadBank(f);});
+  root.querySelector('#q').value=bankQuery;
+  root.querySelector('#q').oninput=()=>{bankQuery=root.querySelector('#q').value;paintList(root);};paintList(root);
+}
+async function loadBank(f){
+  const version=++bankLoadVersion;
+  try{const next=parseBank(new Uint8Array(await f.arrayBuffer()));
+    if(!next.length)throw new Error('This bank contains no programs');
+    if(version!==bankLoadVersion)return;bank=next;log(bank.length+' presets');paintList(document);}
+  catch(e){if(version===bankLoadVersion)log(e.message);}
+}
+async function setupSharedBanks(host){
+  const initialVersion=bankLoadVersion;
+  try{
+    const response=await fetch('presets/banks.json');
+    if(!response.ok)throw new Error('Shared banks unavailable');
+    const entries=await response.json();
+    if(!Array.isArray(entries))throw new Error('Invalid shared bank catalog');
+    if(!host.isConnected)return;host.replaceChildren();
+    if(!entries.length){host.textContent='No shared banks published yet. You can load your own file below.';return;}
+    const select=document.createElement('select');select.setAttribute('aria-label','Shared preset bank');
+    entries.forEach((entry,i)=>{const option=document.createElement('option');option.value=i;option.textContent=entry.name;select.appendChild(option);});
+    const defaultIndex=entries.findIndex(entry=>entry.file.endsWith('/MKXL_FactoryPreset.mkxl_all'));
+    if(defaultIndex>=0)select.value=defaultIndex;
+    const button=document.createElement('button');button.className='hbtn';button.textContent='Load bank';button.type='button';
+    button.onclick=async()=>{
+      const version=++bankLoadVersion;button.disabled=true;button.textContent='Loading…';
+      try{
+        const url=new URL(entries[+select.value].file,document.baseURI);
+        if(url.origin!==location.origin||!url.pathname.startsWith(new URL('presets/',document.baseURI).pathname))throw new Error('Invalid bank URL');
+        const response=await fetch(url);if(!response.ok)throw new Error('Could not load shared bank');
+        const next=parseBank(new Uint8Array(await response.arrayBuffer()));
+        if(!next.length)throw new Error('This bank contains no programs');
+        if(version!==bankLoadVersion)return;bank=next;bankQuery='';
+        const query=$('q');if(query)query.value='';paintList(document);log(bank.length+' shared presets loaded');
+      }catch(e){if(version===bankLoadVersion)log(e.message);}
+      finally{button.disabled=false;button.textContent='Load bank';}
+    };
+    host.append(select,button);
+    if(!bank.length&&!sharedBankLoading&&bankLoadVersion===initialVersion){
+      sharedBankLoading=true;
+      try{await button.onclick();}finally{sharedBankLoading=false;}
+    }
+  }catch(e){if(host.isConnected)host.textContent='Shared banks unavailable. You can load a local file below.';}
+}
+function paintList(root){
+  const r=root||document; const ul=r.querySelector('#plist'); if(!ul)return;
+  const q=(r.querySelector('#q')?.value||'').trim().toLowerCase();
+  ul.innerHTML='';
+  if(!bank.length){const empty=document.createElement('li');empty.className='empty';empty.textContent='Load a .mkxl_all bank to browse your presets';ul.appendChild(empty);return;}
+  bank.forEach((r,i)=>{
+    const n=nameOf(r);
+    if(q&&!n.toLowerCase().includes(q)&&String(i+1)!==q)return;
+    const li=document.createElement('li');
+    const number=document.createElement('b');number.textContent=String(i+1).padStart(3,'0');
+    const name=document.createElement('span');name.textContent=n;li.append(number,name);
+    const b=document.createElement('button'); b.className='send'; b.textContent='Send';
+    b.onclick=ev=>{ev.stopPropagation();
+      if(!midiOut){log('connect MIDI first');return;}
+      midiOut.send(new Uint8Array(sysex(r)));log(n+' sent');};
+    li.appendChild(b);ul.appendChild(li);
+  });
+}
+renderAll();
+</script>
+</body>
+</html>
