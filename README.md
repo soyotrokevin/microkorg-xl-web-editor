@@ -6,6 +6,14 @@ A compact, browser-based sound editor for the **Korg microKORG XL**, built with 
 
 ![microKORG XL Web Editor beta — synthesizer view](docs/images/editor-beta.png)
 
+## Companion MIDI controller
+
+This repository also includes a separate [ESP32-based MIDI controller for the microKORG XL](controller/README.md). It adds **tap tempo, a sustain pedal input and three preset-recall buttons**, with an encoder to select scenes. It connects to the synth's DIN MIDI IN and works independently of the browser editor; no synth firmware modification is required.
+
+[Arduino sketch](controller/Microkorg_XL_Controller/Microkorg_XL_Controller.ino) · [Connection diagram](controller/connection-diagram.png) · [Setup and pin assignments](controller/README.md)
+
+The controller is a beta MIDI-only sketch. Its logic and messages were tested with mocked Arduino interfaces; compilation for the exact ESP32 board and hardware validation remain pending.
+
 ## Features
 
 - Compact synthesizer dashboard designed to fit a 1280 × 720 viewport at 100% browser zoom.
@@ -111,6 +119,7 @@ Preset files are read locally in your browser. The shared catalog includes the m
 ## Project structure
 
 ```text
+controller/                   Standalone MIDI controller, wiring overview and Arduino sketch
 build_editor.py               Rebuilds the standalone application
 src/editor.template.html      UI, styling and MIDI runtime source
 ctrlr/controls_final.json     Authoritative 130-control catalog
